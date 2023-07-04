@@ -1,4 +1,5 @@
 defmodule BrainiExWeb.Endpoint do
+  @moduledoc false
   use Phoenix.Endpoint, otp_app: :braini_ex
 
   # The session will be stored in the cookie and signed,

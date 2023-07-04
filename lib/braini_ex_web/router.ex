@@ -1,4 +1,5 @@
 defmodule BrainiExWeb.Router do
+  @moduledoc false
   use BrainiExWeb, :router
 
   pipeline :browser do

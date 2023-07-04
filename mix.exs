@@ -9,7 +9,23 @@ defmodule BrainiEx.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      dialyzer: [
+        plt_add_apps: [:ex_unit, :mix, :credo, :jason],
+        list_unused_filters: true,
+        plt_local_path: "dialyzer",
+        plt_core_path: "dialyzer"
+      ],
+      preferred_cli_env: [
+        dialyzer: :test,
+        check: :test,
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        doctor: :test
+      ]
     ]
   end
 
@@ -50,7 +66,15 @@ defmodule BrainiEx.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+
+      # tooling
+      {:dialyxir, "~> 1.0", optional: true, only: :test, runtime: false},
+      {:credo, "~> 1.6", only: [:test, :dev], runtime: false},
+      {:blitz_credo_checks, "~> 0.1", only: [:test, :dev], runtime: false},
+      {:excoveralls, "~> 0.16", only: [:test], runtime: false},
+      {:doctor, "~> 0.21.0", only: :test},
+      {:ex_check, "~> 0.15", only: :test, runtime: false}
     ]
   end
 
