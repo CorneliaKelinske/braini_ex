@@ -1,4 +1,5 @@
 defmodule BrainiExWeb.PageController do
+  @moduledoc false
   use BrainiExWeb, :controller
 
   def home(conn, _params) do
