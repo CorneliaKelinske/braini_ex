@@ -1,6 +1,6 @@
 defmodule BrainiEx.WordGames.WordleTest do
   use ExUnit.Case
-  alias BrainiEx.WordGames.Wordle
+  alias BrainiEx.WordGames.Wordle.Wordle
 
   describe "&word/0" do
     test "returns a 5-letter word" do

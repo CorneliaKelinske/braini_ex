@@ -1,6 +1,6 @@
-defmodule BrainiEx.WordGames.Wordle do
+defmodule BrainiEx.WordGames.Wordle.Wordle do
   @moduledoc """
-  Contains the functions and logic for a wordle game
+  Contains the functions and logic for a wordle game as well as
   """
   @words ["toast", "tarts", "pizza", "hello", "beats"]
 
