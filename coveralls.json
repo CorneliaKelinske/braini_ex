@@ -10,8 +10,7 @@
       "lib/braini_ex.ex",
       "lib/braini_ex/web/layouts",
       "lib/braini_ex_web/endpoint.ex",
-      "test/support/*",
-      "lib/braini_ex/word_games/wordle/game.ex",
+      "test/support/*",     
       "lib/braini_ex_web/components/core_components"
 
     ]
