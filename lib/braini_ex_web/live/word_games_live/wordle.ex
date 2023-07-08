@@ -11,17 +11,17 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
     {:ok,
      socket
      |> assign_title(@title)
-     |> assign_word()}
+     |> assign_game()}
   end
 
   defp assign_title(socket, title), do: assign(socket, title: title)
-  defp assign_word(socket), do: assign(socket, secret_word: WordGames.get_wordle_word())
+  defp assign_game(socket), do: assign(socket, game: WordGames.start_wordle_game())
 
   @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
     <h1><%= @title %></h1>
-    <p><%= @secret_word %></p>
+    <p><%= @game.secret_word %></p>
     """
   end
 end

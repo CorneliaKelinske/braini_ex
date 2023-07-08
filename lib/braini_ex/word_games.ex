@@ -3,8 +3,9 @@ defmodule BrainiEx.WordGames do
   Too-layer module with functions for playing word games
   """
 
-  alias BrainiEx.WordGames.Wordle.Wordle
+  alias BrainiEx.WordGames.Wordle
+  alias BrainiEx.WordGames.Wordle.Game
 
-  @spec get_wordle_word() :: String.t()
-  defdelegate get_wordle_word, to: Wordle, as: :word
+  @spec start_wordle_game() :: Game.t()
+  defdelegate start_wordle_game, to: Wordle, as: :create_game
 end
