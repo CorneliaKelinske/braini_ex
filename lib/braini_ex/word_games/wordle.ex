@@ -2,7 +2,7 @@ defmodule BrainiEx.WordGames.Wordle do
   @moduledoc """
   Contains the functions and logic for a wordle game as well as
   """
-  alias BrainiEx.WordGames.Wordle.Game
+  alias BrainiEx.WordGames.Wordle.{Game, Guess}
   @words ["toast", "tarts", "pizza", "hello", "beats"]
 
   @spec create_game() :: Game.t()
