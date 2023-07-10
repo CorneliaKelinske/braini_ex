@@ -25,13 +25,16 @@ defmodule BrainiEx.WordGames.Wordle.Game do
     color_feedback: :list
   }
 
+  @required_attrs [:secret_word, :attempts, :won, :color_feedback]
+  @attrs [:current_guess] ++ @required_attrs
+
   import Ecto.Changeset
 
   @spec changeset(t(), map) :: Ecto.Changeset.t()
   def changeset(%__MODULE__{} = game, attrs) do
     {game, @types}
-    |> cast(attrs, Map.keys(@types))
-    |> validate_required(Map.keys(@types))
+    |> cast(attrs, @attrs)
+    |> validate_required(@required_attrs)
   end
 
   @spec new(map()) :: t()
