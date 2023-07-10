@@ -21,28 +21,6 @@ defmodule BrainiEx.WordGames.WordleTest do
     end
   end
 
-  describe "&apply_changeset/2" do
-    test "returns an error changeset with no existing game as first param" do
-      assert %Ecto.Changeset{
-               changes: %{},
-               errors: [secret_word: {"can't be blank", [validation: :required]}],
-               valid?: false
-             } = Wordle.apply_changeset(%Game{}, %{})
-    end
-
-    test "returns valid changeset with existing game as first param" do
-      assert %Ecto.Changeset{
-               changes: %{},
-               valid?: true
-             } = Game.changeset(@game, %{})
-
-      assert %Ecto.Changeset{
-               changes: @current_guess,
-               valid?: true
-             } = Game.changeset(@game, @current_guess)
-    end
-  end
-
   describe "&check_guess_and_update_game/2" do
     test "returns updated Game struct when correct guess is entered" do
       assert %Game{
