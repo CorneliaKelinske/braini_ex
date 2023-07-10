@@ -23,17 +23,17 @@ defmodule BrainiEx.WordGames.Test do
   describe "&check_guess/2" do
     test "returns an updated Game struct" do
       assert %Game{
-        current_guess: "palace",
-        won: false,
-        attempts: 1,
-        color_feedback: [
-          {"p", :green},
-          {"a", :yellow},
-          {"l", :grey},
-          {"a", :yellow},
-          {"c", :grey}
-        ]
-      } = WordGames.check_guess("palace", @game)
+               current_guess: "palace",
+               won: false,
+               attempts: 1,
+               color_feedback: [
+                 {"p", :green},
+                 {"a", :yellow},
+                 {"l", :grey},
+                 {"a", :yellow},
+                 {"c", :grey}
+               ]
+             } = WordGames.check_guess("palace", @game)
     end
   end
 end
