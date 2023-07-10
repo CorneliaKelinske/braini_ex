@@ -2,13 +2,18 @@ defmodule BrainiEx.WordGames.Wordle do
   @moduledoc """
   Contains the functions and logic for a wordle game as well as
   """
-  alias BrainiEx.WordGames.Wordle.{Game, Guess}
+  alias BrainiEx.WordGames.Wordle.Game
   @words ["toast", "tarts", "pizza", "hello", "beats"]
 
   @spec create_game() :: Game.t()
   def create_game do
     secret_word = word()
     Game.new(%{secret_word: secret_word})
+  end
+
+  @spec apply_changeset(Game.t(), map()) :: Ecto.Changeset.t()
+  def apply_changeset(%Game{} = game, attrs \\ %{}) do
+    Game.changeset(game, attrs)
   end
 
   @spec check_guess_and_update_game(String.t(), Game.t()) :: Game.t()

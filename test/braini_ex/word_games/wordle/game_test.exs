@@ -5,7 +5,6 @@ defmodule BrainiEx.WordGames.Wordle.GameTest do
 
   @params %{secret_word: "pizza"}
   @attrs %{secret_word: "hotel", attempts: 1, current_guess: "pizza"}
-  @invalid_attrs %{secret_word: "hotel"}
 
   describe "&new/1" do
     test "returns a new game struct with the passed in secret word" do
@@ -28,10 +27,10 @@ defmodule BrainiEx.WordGames.Wordle.GameTest do
 
     test "returns  invalid changeset struct when valid attributes are provided" do
       assert %Ecto.Changeset{
-               changes: %{secret_word: "hotel"},
-               errors: [current_guess: {"can't be blank", [validation: :required]}],
+               changes: %{},
+               errors: [secret_word: {"can't be blank", [validation: :required]}],
                valid?: false
-             } = Game.changeset(%Game{}, @invalid_attrs)
+             } = Game.changeset(%Game{}, %{})
     end
   end
 end

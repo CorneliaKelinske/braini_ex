@@ -36,4 +36,13 @@ defmodule BrainiEx.WordGames.Test do
              } = WordGames.check_guess("palace", @game)
     end
   end
+
+  describe "&wordle_changeset/2" do
+    test "returns a Game changeset" do
+      assert %Ecto.Changeset{
+               changes: %{},
+               valid?: true
+             } = WordGames.wordle_changeset(@game, %{})
+    end
+  end
 end

@@ -11,11 +11,35 @@ defmodule BrainiEx.WordGames.WordleTest do
     color_feedback: []
   }
 
+  @current_guess %{current_guess: "pizza"}
+
   describe "&create_game/0" do
     test "returns a Game struct with a 5-letter secret word" do
       assert %Game{secret_word: secret_word} = Wordle.create_game()
       assert is_binary(secret_word)
       assert String.length(secret_word) === 5
+    end
+  end
+
+  describe "&apply_changeset/2" do
+    test "returns an error changeset with no existing game as first param" do
+      assert %Ecto.Changeset{
+               changes: %{},
+               errors: [secret_word: {"can't be blank", [validation: :required]}],
+               valid?: false
+             } = Wordle.apply_changeset(%Game{}, %{})
+    end
+
+    test "returns valid changeset with existing game as first param" do
+      assert %Ecto.Changeset{
+               changes: %{},
+               valid?: true
+             } = Game.changeset(@game, %{})
+
+      assert %Ecto.Changeset{
+               changes: @current_guess,
+               valid?: true
+             } = Game.changeset(@game, @current_guess)
     end
   end
 
