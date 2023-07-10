@@ -11,7 +11,4 @@ defmodule BrainiEx.WordGames do
 
   @spec check_guess(String.t(), Game.t()) :: Game.t()
   defdelegate check_guess(guess, game), to: Wordle, as: :check_guess_and_update_game
-
-  @spec wordle_changeset(Game.t(), map()) :: Ecto.Changeset.t()
-  defdelegate wordle_changeset(game, attrs), to: Wordle, as: :apply_changeset
 end

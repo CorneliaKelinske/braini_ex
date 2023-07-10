@@ -11,11 +11,6 @@ defmodule BrainiEx.WordGames.Wordle do
     Game.new(%{secret_word: secret_word})
   end
 
-  @spec apply_changeset(Game.t(), map()) :: Ecto.Changeset.t()
-  def apply_changeset(%Game{} = game, attrs \\ %{}) do
-    Game.changeset(game, attrs)
-  end
-
   @spec check_guess_and_update_game(String.t(), Game.t()) :: Game.t()
   def check_guess_and_update_game(
         guess,
