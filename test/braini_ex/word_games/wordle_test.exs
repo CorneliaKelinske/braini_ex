@@ -11,6 +11,14 @@ defmodule BrainiEx.WordGames.WordleTest do
     color_feedback: []
   }
 
+  @color_feedback [
+    {"p", :green},
+    {"a", :yellow},
+    {"l", :grey},
+    {"a", :yellow},
+    {"c", :grey}
+  ]
+
   @current_guess %{current_guess: "pizza"}
 
   describe "&create_game/0" do
@@ -28,11 +36,13 @@ defmodule BrainiEx.WordGames.WordleTest do
                won: true,
                attempts: 1,
                color_feedback: [
-                 {"p", :green},
-                 {"i", :green},
-                 {"z", :green},
-                 {"z", :green},
-                 {"a", :green}
+                 [
+                   {"p", :green},
+                   {"i", :green},
+                   {"z", :green},
+                   {"z", :green},
+                   {"a", :green}
+                 ]
                ]
              } = Wordle.check_guess_and_update_game("pizza", @game)
     end
@@ -43,13 +53,32 @@ defmodule BrainiEx.WordGames.WordleTest do
                won: false,
                attempts: 1,
                color_feedback: [
-                 {"p", :green},
-                 {"a", :yellow},
-                 {"l", :grey},
-                 {"a", :yellow},
-                 {"c", :grey}
+                 [
+                   {"p", :green},
+                   {"a", :yellow},
+                   {"l", :grey},
+                   {"a", :yellow},
+                   {"c", :grey}
+                 ]
                ]
              } = Wordle.check_guess_and_update_game("palace", @game)
+    end
+
+    test "adds current color feedback to color_feedback" do
+      game = Map.put(@game, :color_feedback, [@color_feedback])
+
+      assert %Game{
+               color_feedback: [
+                 @color_feedback,
+                 [
+                   {"p", :green},
+                   {"i", :green},
+                   {"z", :green},
+                   {"z", :green},
+                   {"a", :green}
+                 ]
+               ]
+             } = Wordle.check_guess_and_update_game("pizza", game)
     end
   end
 end

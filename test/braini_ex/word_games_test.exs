@@ -27,11 +27,13 @@ defmodule BrainiEx.WordGames.Test do
                won: false,
                attempts: 1,
                color_feedback: [
-                 {"p", :green},
-                 {"a", :yellow},
-                 {"l", :grey},
-                 {"a", :yellow},
-                 {"c", :grey}
+                 [
+                   {"p", :green},
+                   {"a", :yellow},
+                   {"l", :grey},
+                   {"a", :yellow},
+                   {"c", :grey}
+                 ]
                ]
              } = WordGames.check_guess("palace", @game)
     end

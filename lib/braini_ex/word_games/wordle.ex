@@ -14,12 +14,15 @@ defmodule BrainiEx.WordGames.Wordle do
   @spec check_guess_and_update_game(String.t(), Game.t()) :: Game.t()
   def check_guess_and_update_game(
         guess,
-        %Game{secret_word: secret_word, attempts: attempts} = game
+        %Game{secret_word: secret_word, attempts: attempts, color_feedback: color_feedback} = game
       ) do
     guess = String.downcase(guess)
 
-    update_params = game_updates(guess, secret_word, attempts)
-    Map.merge(game, update_params)
+    {current_color_feedback, update_params} = game_updates(guess, secret_word, attempts)
+
+    game
+    |> Map.put(:color_feedback, color_feedback ++ [current_color_feedback])
+    |> Map.merge(update_params)
   end
 
   defp word do
@@ -28,17 +31,18 @@ defmodule BrainiEx.WordGames.Wordle do
 
   defp game_updates(guess, secret_word, attempts) do
     if guess === secret_word do
-      color_feedback =
+      current_color_feedback =
         guess
         |> String.graphemes()
         |> Enum.map(&{&1, :green})
 
-      %{color_feedback: color_feedback, won: true, current_guess: guess, attempts: attempts + 1}
+      {current_color_feedback, %{won: true, current_guess: guess, attempts: attempts + 1}}
     else
       guess_letters = String.graphemes(guess)
       secret_word_letters = String.graphemes(secret_word)
-      color_feedback = check_letters(guess_letters, secret_word_letters)
-      %{color_feedback: color_feedback, current_guess: guess, attempts: attempts + 1}
+      current_color_feedback = check_letters(guess_letters, secret_word_letters)
+
+      {current_color_feedback, %{current_guess: guess, attempts: attempts + 1}}
     end
   end
 

@@ -41,6 +41,11 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
     <h1><%= @title %></h1>
     <p><%= @game.secret_word %></p>
     <p><%= @game.current_guess %></p>
+    <div>
+      <%= for feedback <- @game.color_feedback do %>
+        <p><%= inspect(feedback) %></p>
+      <% end %>
+    </div>
 
     <div>
       <.simple_form :let={f} for={%{}} as={:game} phx-submit="check">
