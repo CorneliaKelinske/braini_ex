@@ -19,8 +19,6 @@ defmodule BrainiEx.WordGames.WordleTest do
     {"c", :grey}
   ]
 
-  @current_guess %{current_guess: "pizza"}
-
   describe "&create_game/0" do
     test "returns a Game struct with a 5-letter secret word" do
       assert %Game{secret_word: secret_word} = Wordle.create_game()
@@ -56,9 +54,9 @@ defmodule BrainiEx.WordGames.WordleTest do
                  [
                    {"p", :green},
                    {"a", :yellow},
-                   {"l", :grey},
+                   {"l", :gray},
                    {"a", :yellow},
-                   {"c", :grey}
+                   {"c", :gray}
                  ]
                ]
              } = Wordle.check_guess_and_update_game("palace", @game)
