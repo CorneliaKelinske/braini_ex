@@ -58,7 +58,7 @@ defmodule BrainiEx.WordGames.Wordle do
     if guessed_letter in secret_word_letters do
       {guessed_letter, :yellow}
     else
-      {guessed_letter, :grey}
+      {guessed_letter, :gray}
     end
   end
 end

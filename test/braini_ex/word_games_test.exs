@@ -30,9 +30,9 @@ defmodule BrainiEx.WordGames.Test do
                  [
                    {"p", :green},
                    {"a", :yellow},
-                   {"l", :grey},
+                   {"l", :gray},
                    {"a", :yellow},
-                   {"c", :grey}
+                   {"c", :gray}
                  ]
                ]
              } = WordGames.check_guess("palace", @game)

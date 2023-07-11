@@ -39,17 +39,19 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
   def render(assigns) do
     ~H"""
     <h1><%= @title %></h1>
-    <p><%= @game.secret_word %></p>
-    <p><%= @game.current_guess %></p>
     <div>
       <%= for feedback <- @game.color_feedback do %>
-        <p><%= inspect(feedback) %></p>
+        <p>
+          <%= for {letter, color} <- feedback do %>
+            <span class={[color(color)]}><%= letter %></span>
+          <% end %>
+        </p>
       <% end %>
     </div>
 
     <div>
       <.simple_form :let={f} for={%{}} as={:game} phx-submit="check">
-        <.input field={{f, :current_guess}} label="your guess" />
+        <.input field={{f, :current_guess}} label="Your guess" />
         <:actions>
           <.button>Check your guess</.button>
         </:actions>
@@ -57,4 +59,8 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
     </div>
     """
   end
+
+  defp color(:green), do: "text-green-500"
+  defp color(:yellow), do: "text-yellow-500"
+  defp color(:gray), do: "text-gray-500"
 end
