@@ -3,6 +3,13 @@ defmodule BrainiExWeb.WordGamesLive.WordleTest do
 
   import Phoenix.LiveViewTest
 
+  alias BrainiEx.WordGames.Wordle.RandomWordGenerator
+
+  setup do
+    start_supervised!(RandomWordGenerator, [])
+    :ok
+  end
+
   describe "&Wordle" do
     test "shows correct page", %{conn: conn} do
       assert true
