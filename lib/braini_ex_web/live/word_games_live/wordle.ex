@@ -36,6 +36,11 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
   end
 
   @impl Phoenix.LiveView
+  def handle_event("restart", _, socket) do
+    {:noreply, redirect(socket, to: ~p"/word_games/wordle")}
+  end
+
+  @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
     <h1><%= @title %></h1>
@@ -48,15 +53,18 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
         </p>
       <% end %>
     </div>
-
-    <div>
-      <.simple_form :let={f} for={%{}} as={:game} phx-submit="check">
-        <.input field={{f, :current_guess}} label="Your guess" />
-        <:actions>
-          <.button>Check your guess</.button>
-        </:actions>
-      </.simple_form>
-    </div>
+    <%= if @game.attempts < 6 and @game.won === false do %>
+      <div>
+        <.simple_form :let={f} for={%{}} as={:game} phx-submit="check">
+          <.input field={{f, :current_guess}} label="Your guess" />
+          <:actions>
+            <.button>Check your guess</.button>
+          </:actions>
+        </.simple_form>
+      </div>
+    <% else %>
+    <.button class="mt-2 bg-violet-900 hover:bg-violet-700" phx-click="restart">Play again!</.button>
+    <% end %>
     """
   end
 
