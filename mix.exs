@@ -67,6 +67,7 @@ defmodule BrainiEx.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
+      {:req, "~> 0.3.6"},
 
       # tooling
       {:dialyxir, "~> 1.0", optional: true, only: :test, runtime: false},

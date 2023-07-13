@@ -2,6 +2,12 @@ defmodule BrainiEx.WordGames.WordleTest do
   use ExUnit.Case
   alias BrainiEx.WordGames.Wordle
   alias BrainiEx.WordGames.Wordle.Game
+  alias BrainiEx.WordGames.Wordle.RandomWordGenerator
+
+  setup do
+    start_supervised!(RandomWordGenerator, [])
+    :ok
+  end
 
   @game %Game{
     secret_word: "pizza",

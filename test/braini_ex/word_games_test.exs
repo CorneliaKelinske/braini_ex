@@ -3,6 +3,12 @@ defmodule BrainiEx.WordGames.Test do
 
   alias BrainiEx.WordGames
   alias BrainiEx.WordGames.Wordle.Game
+  alias BrainiEx.WordGames.Wordle.RandomWordGenerator
+
+  setup do
+    start_supervised!(RandomWordGenerator, [])
+    :ok
+  end
 
   @game %Game{
     secret_word: "pizza",

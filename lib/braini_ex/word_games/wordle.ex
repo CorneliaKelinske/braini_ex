@@ -2,8 +2,7 @@ defmodule BrainiEx.WordGames.Wordle do
   @moduledoc """
   Contains the functions and logic for a wordle game as well as
   """
-  alias BrainiEx.WordGames.Wordle.Game
-  @words ["toast", "tarts", "pizza", "hello", "beats"]
+  alias BrainiEx.WordGames.Wordle.{Game, RandomWordGenerator}
 
   @spec create_game() :: Game.t()
   def create_game do
@@ -26,7 +25,7 @@ defmodule BrainiEx.WordGames.Wordle do
   end
 
   defp word do
-    Enum.random(@words)
+    RandomWordGenerator.get_word()
   end
 
   defp game_updates(guess, secret_word, attempts) do
