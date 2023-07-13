@@ -63,6 +63,11 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
         </.simple_form>
       </div>
     <% else %>
+    <%= if @game.won === false do %>
+    <p>You lost! The secret word was: </p>
+    <p><%= @game.secret_word %></p>
+    <% end %>
+
       <.button class="mt-2 bg-violet-900 hover:bg-violet-700" phx-click="restart">
         Play again!
       </.button>
