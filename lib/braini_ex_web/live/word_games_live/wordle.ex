@@ -57,9 +57,6 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
       <div>
         <.simple_form :let={f} for={%{}} as={:game} phx-submit="check">
           <.input field={{f, :current_guess}} label="Your guess" />
-          <:actions>
-            <.button>Check your guess</.button>
-          </:actions>
         </.simple_form>
       </div>
     <% else %>
