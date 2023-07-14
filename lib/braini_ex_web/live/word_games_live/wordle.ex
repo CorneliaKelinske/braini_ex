@@ -48,7 +48,7 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
       <%= for feedback <- @game.color_feedback do %>
         <p>
           <%= for {letter, color} <- feedback do %>
-            <span class={[color(color)]}><%= letter %></span>
+            <span id="coloredLetter" class={[color(color)]}><%= letter %></span>
           <% end %>
         </p>
       <% end %>
@@ -63,10 +63,10 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
         </.simple_form>
       </div>
     <% else %>
-    <%= if @game.won === false do %>
-    <p>You lost! The secret word was: </p>
-    <p><%= @game.secret_word %></p>
-    <% end %>
+      <%= if @game.won === false do %>
+        <p>You lost! The secret word was:</p>
+        <p><%= @game.secret_word %></p>
+      <% end %>
 
       <.button class="mt-2 bg-violet-900 hover:bg-violet-700" phx-click="restart">
         Play again!
