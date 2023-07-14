@@ -7,6 +7,8 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGenerator do
 
   alias BrainiEx.WordGames.Wordle.Words
 
+  @words ["toast", "tarts", "pizza"]
+
   # Client
 
   @spec start_link(list()) :: :ignore | {:error, any} | {:ok, pid}
@@ -33,5 +35,9 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGenerator do
     {:reply, word, new_state}
   end
 
-  defp words, do: Words.get_words()
+  if Mix.env() === :test do
+    defp words, do: @words
+  else
+    defp words, do: Words.get_words()
+  end
 end

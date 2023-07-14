@@ -68,6 +68,7 @@ defmodule BrainiEx.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:req, "~> 0.3.6"},
+      {:sandbox_registry, "~> 0.1.1"},
 
       # tooling
       {:dialyxir, "~> 1.0", optional: true, only: :test, runtime: false},

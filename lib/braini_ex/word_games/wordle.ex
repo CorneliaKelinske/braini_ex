@@ -2,7 +2,7 @@ defmodule BrainiEx.WordGames.Wordle do
   @moduledoc """
   Contains the functions and logic for a wordle game as well as
   """
-  alias BrainiEx.WordGames.Wordle.{Game, RandomWordGenerator}
+  alias BrainiEx.WordGames.Wordle.{Game, RandomWordGenerator, Words}
 
   @spec create_game() :: Game.t()
   def create_game do
@@ -24,8 +24,14 @@ defmodule BrainiEx.WordGames.Wordle do
     |> Map.merge(update_params)
   end
 
-  defp word do
-    RandomWordGenerator.get_word()
+  if Mix.env() === :test do
+    defp word do
+      Enum.random(Words.get_words())
+    end
+  else
+    defp word do
+      RandomWordGenerator.get_word()
+    end
   end
 
   defp game_updates(guess, secret_word, attempts) do

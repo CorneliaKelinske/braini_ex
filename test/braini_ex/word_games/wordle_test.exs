@@ -1,13 +1,8 @@
 defmodule BrainiEx.WordGames.WordleTest do
   use ExUnit.Case
+  alias BrainiEx.Support.{HTTPSandbox, WordleSandboxResponses}
   alias BrainiEx.WordGames.Wordle
   alias BrainiEx.WordGames.Wordle.Game
-  alias BrainiEx.WordGames.Wordle.RandomWordGenerator
-
-  setup do
-    start_supervised!(RandomWordGenerator, [])
-    :ok
-  end
 
   @game %Game{
     secret_word: "pizza",
@@ -27,6 +22,7 @@ defmodule BrainiEx.WordGames.WordleTest do
 
   describe "&create_game/0" do
     test "returns a Game struct with a 5-letter secret word" do
+      HTTPSandbox.set_get_responses([WordleSandboxResponses.mock_words_response()])
       assert %Game{secret_word: secret_word} = Wordle.create_game()
       assert is_binary(secret_word)
       assert String.length(secret_word) === 5
@@ -35,6 +31,8 @@ defmodule BrainiEx.WordGames.WordleTest do
 
   describe "&check_guess_and_update_game/2" do
     test "returns updated Game struct when correct guess is entered" do
+      HTTPSandbox.set_get_responses([WordleSandboxResponses.mock_words_response()])
+
       assert %Game{
                current_guess: "pizza",
                won: true,
@@ -52,6 +50,8 @@ defmodule BrainiEx.WordGames.WordleTest do
     end
 
     test "returns updated Game struct with correct color info when guess is incorrect" do
+      HTTPSandbox.set_get_responses([WordleSandboxResponses.mock_words_response()])
+
       assert %Game{
                current_guess: "palace",
                won: false,
@@ -69,6 +69,7 @@ defmodule BrainiEx.WordGames.WordleTest do
     end
 
     test "adds current color feedback to color_feedback" do
+      HTTPSandbox.set_get_responses([WordleSandboxResponses.mock_words_response()])
       game = Map.put(@game, :color_feedback, [@color_feedback])
 
       assert %Game{
