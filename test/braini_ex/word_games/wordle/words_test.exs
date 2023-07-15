@@ -5,18 +5,29 @@ defmodule BrainiEx.WordGames.Wordle.WordsTest do
   alias BrainiEx.WordGames.Wordle.Words
 
   describe "&get_words/1" do
-    test "returns a list of 5-letter words" do
+    test "returns tuple with :ok and a list of 5-letter words" do
       HTTPSandbox.set_get_responses([WordleSandboxResponses.mock_words_response()])
-      assert [word | _] = Words.get_words()
+      assert {:ok, [word | _]} = Words.get_words()
       assert is_binary(word)
       assert String.length(word) === 5
+    end
+
+    test "returns error tuple for unsuccessful request" do
+      HTTPSandbox.set_get_responses([WordleSandboxResponses.mock_words_error_response()])
+
+      assert {:error,
+              %ErrorMessage{
+                code: :bad_request,
+                message: "Unable to request wordle words",
+                details: "some error info"
+              }} = Words.get_words()
     end
   end
 
   describe "&get_words/1 against live site" do
     @describetag :http
     test "returns a list of 5-letter words" do
-      assert [word | _] = Words.get_words(sandbox?: false)
+      assert {:ok, [word | _]} = Words.get_words(sandbox?: false)
       assert is_binary(word)
       assert String.length(word) === 5
     end

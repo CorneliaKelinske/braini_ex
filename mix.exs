@@ -20,6 +20,7 @@ defmodule BrainiEx.MixProject do
       preferred_cli_env: [
         dialyzer: :test,
         check: :test,
+        credo: :test,
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
@@ -69,6 +70,7 @@ defmodule BrainiEx.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:req, "~> 0.3.6"},
       {:sandbox_registry, "~> 0.1.1"},
+      {:error_message, "~> 0.3.1"},
 
       # tooling
       {:dialyxir, "~> 1.0", optional: true, only: :test, runtime: false},
