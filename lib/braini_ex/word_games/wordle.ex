@@ -4,9 +4,11 @@ defmodule BrainiEx.WordGames.Wordle do
   """
   alias BrainiEx.WordGames.Wordle.{Game, RandomWordGenerator, Words}
 
+  @message "Unable to request wordle words"
+
   @spec create_game() :: Game.t()
   def create_game do
-    secret_word = word()
+    secret_word = word() 
     Game.new(%{secret_word: secret_word})
   end
 
@@ -26,9 +28,11 @@ defmodule BrainiEx.WordGames.Wordle do
 
   if Mix.env() === :test do
     defp word do
-      with {:ok, words} <- Words.get_words() do
-        Enum.random(words)
+      case Words.get_words() do
+        {:ok, words} -> Enum.random(words)
+        {:error, %ErrorMessage{message: @message}} -> @message
       end
+
     end
   else
     defp word do

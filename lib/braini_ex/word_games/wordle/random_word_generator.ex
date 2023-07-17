@@ -8,6 +8,7 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGenerator do
   alias BrainiEx.WordGames.Wordle.Words
 
   @words ["toast", "tarts", "pizza"]
+  @message "Unable to request wordle words"
 
   # Client
 
@@ -25,10 +26,18 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGenerator do
 
   @impl GenServer
   def init(_) do
-    words()
+    case words() do
+      {:ok, words} -> {:ok, words}
+      {:error, %ErrorMessage{message: @message}} -> {:ok, [@message]}
+      error -> {:error, ErrorMessage.internal_server_error("Something went wrong", inspect(error))}
+    end
   end
 
   @impl GenServer
+  def handle_call(:get_word, _from, [@message] = state) do
+    {:reply, @message, state}
+  end
+
   def handle_call(:get_word, _from, state) do
     word = Enum.random(state)
     new_state = state -- [word]
