@@ -20,12 +20,19 @@ defmodule BrainiEx.WordGames.WordleTest do
     {"c", :grey}
   ]
 
+  @message "Unable to request wordle words"
+
   describe "&create_game/0" do
     test "returns a Game struct with a 5-letter secret word" do
       HTTPSandbox.set_get_responses([WordleSandboxResponses.mock_words_response()])
       assert %Game{secret_word: secret_word} = Wordle.create_game()
       assert is_binary(secret_word)
       assert String.length(secret_word) === 5
+    end
+
+    test "returns Game struct with message from error message as secret word when initial request for words was unsuccessful" do
+      HTTPSandbox.set_get_responses([WordleSandboxResponses.mock_words_error_response()])
+      assert %Game{secret_word: @message} = Wordle.create_game()
     end
   end
 

@@ -4,8 +4,10 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
   use BrainiExWeb, :live_view
   import BrainiExWeb.CoreComponents
   alias BrainiEx.WordGames
+  alias BrainiEx.WordGames.Wordle.Game
 
   @title "Wordle"
+  @message "Unable to request wordle words"
 
   @impl Phoenix.LiveView
   def mount(_, _, socket) do
@@ -34,7 +36,15 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
   end
 
   defp assign_title(socket, title), do: assign(socket, title: title)
-  defp assign_game(socket), do: assign(socket, game: WordGames.start_wordle_game())
+  defp assign_game(socket) do
+    case WordGames.start_wordle_game() do
+      %Game{secret_word: @message} ->
+        socket
+        |> put_flash(:error, "Wordle currently not available")
+        |> redirect(to: "/")
+      game -> assign(socket, game: game)
+    end
+  end
 
   defp assign_game_update(socket, current_guess, game) do
     assign(socket, game: WordGames.check_guess(current_guess, game))
