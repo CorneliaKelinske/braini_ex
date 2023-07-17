@@ -26,7 +26,9 @@ defmodule BrainiEx.WordGames.Wordle do
 
   if Mix.env() === :test do
     defp word do
-      Enum.random(Words.get_words())
+      with {:ok, words} <- Words.get_words() do
+        Enum.random(words)
+      end
     end
   else
     defp word do

@@ -25,7 +25,7 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGenerator do
 
   @impl GenServer
   def init(_) do
-    {:ok, words()}
+    words()
   end
 
   @impl GenServer
@@ -36,7 +36,7 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGenerator do
   end
 
   if Mix.env() === :test do
-    defp words, do: @words
+    defp words, do: {:ok, @words}
   else
     defp words, do: Words.get_words()
   end

@@ -7,17 +7,24 @@ defmodule BrainiEx.WordGames.Wordle.Words do
     sandbox?: Mix.env() === :test
   ]
 
-  @spec get_words(keyword()) :: [String.t()]
+  @spec get_words(keyword()) :: {:ok, [String.t()]} | {:error, ErrorMessage.t()}
   def get_words(opts \\ []) do
     opts = Keyword.merge(@defaults_opts, opts)
 
     if opts[:sandbox?] do
       sandbox_get_response(@url, "", opts)
     else
-      @url
-      |> Req.get!()
-      |> Map.get(:body)
-      |> String.split("\n")
+      live_get_response(@url)
+    end
+  end
+
+  defp live_get_response(url) do
+    case Req.get!(url) do
+      %Req.Response{status: 200, body: body} ->
+        {:ok, String.split(body, "\n")}
+
+      error ->
+        {:error, ErrorMessage.bad_request("Unable to request wordle words", inspect(error))}
     end
   end
 
