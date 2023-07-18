@@ -3,7 +3,7 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGeneratorTest do
   alias BrainiEx.WordGames.Wordle.RandomWordGenerator
 
   setup do
-    start_supervised!(RandomWordGenerator, [])
+    start_supervised!({RandomWordGenerator, %{}})
     :ok
   end
 
