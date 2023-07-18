@@ -12,9 +12,9 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGenerator do
 
   # Client
 
-  @spec start_link(list()) :: :ignore | {:error, any} | {:ok, pid}
-  def start_link([]) do
-    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  @spec start_link(map()) :: :ignore | {:error, any} | {:ok, pid}
+  def start_link(%{}) do
+    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
   @spec get_word() :: String.t()
@@ -27,20 +27,21 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGenerator do
   @impl GenServer
   def init(_) do
     case words() do
-      {:ok, words} -> {:ok, words}
-      {:error, %ErrorMessage{message: @message}} -> {:ok, [@message]}
+      {:ok, words} -> {:ok, %{all_words: words, unused_words: words}}
+      {:error, %ErrorMessage{message: @message}} -> {:ok, %{all_words: @message}}
       error -> {:error, ErrorMessage.internal_server_error("Something went wrong", inspect(error))}
     end
   end
 
   @impl GenServer
-  def handle_call(:get_word, _from, [@message] = state) do
+  def handle_call(:get_word, _from, %{all_words: @message} = state) do
     {:reply, @message, state}
   end
 
-  def handle_call(:get_word, _from, state) do
-    word = Enum.random(state)
-    new_state = state -- [word]
+  def handle_call(:get_word, _from, %{unused_words: unused_words} = state) do
+    word = Enum.random(unused_words)
+    unused_words = unused_words -- [word]
+    new_state = Map.put(state, :unused_words, unused_words)
     {:reply, word, new_state}
   end
 

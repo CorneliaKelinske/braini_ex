@@ -31,7 +31,7 @@ defmodule BrainiEx.Application do
   if Mix.env() === :test do
     def random_word_generator, do: []
   else
-    def random_word_generator, do: [{BrainiEx.WordGames.Wordle.RandomWordGenerator, []}]
+    def random_word_generator, do: [{BrainiEx.WordGames.Wordle.RandomWordGenerator, %{}}]
   end
 
   # Tell Phoenix to update the endpoint configuration
