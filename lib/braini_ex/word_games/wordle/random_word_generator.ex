@@ -38,6 +38,13 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGenerator do
     {:reply, @message, state}
   end
 
+  def handle_call(:get_word, _from, %{all_words: all_words, unused_words: []} = state) do
+    word = Enum.random(all_words)
+    unused_words = all_words -- [word]
+    new_state = Map.put(state, :unused_words, unused_words)
+    {:reply, word, new_state}
+  end
+
   def handle_call(:get_word, _from, %{unused_words: unused_words} = state) do
     word = Enum.random(unused_words)
     unused_words = unused_words -- [word]
