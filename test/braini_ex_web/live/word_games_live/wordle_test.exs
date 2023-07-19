@@ -14,8 +14,9 @@ defmodule BrainiExWeb.WordGamesLive.WordleTest do
 
     test "redirects to home when secret word consists of error message", %{conn: conn} do
       HTTPSandbox.set_get_responses([WordleSandboxResponses.mock_words_error_response()])
-      {:error, {:redirect, %{flash: %{"error" => "Wordle currently not available"}, to: "/"}}} = live(conn, ~p"/word_games/wordle")
 
+      {:error, {:redirect, %{flash: %{"error" => "Wordle currently not available"}, to: "/"}}} =
+        live(conn, ~p"/word_games/wordle")
     end
 
     test "adds current guess to list when form is submitted", %{conn: conn} do

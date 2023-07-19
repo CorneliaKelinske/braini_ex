@@ -8,7 +8,7 @@ defmodule BrainiEx.WordGames.Wordle do
 
   @spec create_game() :: Game.t()
   def create_game do
-    secret_word = word() 
+    secret_word = get_random_word()
     Game.new(%{secret_word: secret_word})
   end
 
@@ -17,44 +17,55 @@ defmodule BrainiEx.WordGames.Wordle do
         guess,
         %Game{secret_word: secret_word, attempts: attempts, color_feedback: color_feedback} = game
       ) do
-    guess = String.downcase(guess)
+    game = Map.put(game, :current_guess, String.downcase(guess))
 
-    {current_color_feedback, update_params} = game_updates(guess, secret_word, attempts)
-
-    game
-    |> Map.put(:color_feedback, color_feedback ++ [current_color_feedback])
-    |> Map.merge(update_params)
+    process_guess_and_apply_updates(game)
   end
 
   if Mix.env() === :test do
-    defp word do
+    defp get_random_word do
       case Words.get_words() do
         {:ok, words} -> Enum.random(words)
         {:error, %ErrorMessage{message: @message}} -> @message
       end
-
     end
   else
-    defp word do
+    defp get_random_word do
       RandomWordGenerator.get_word()
     end
   end
 
-  defp game_updates(guess, secret_word, attempts) do
-    if guess === secret_word do
-      current_color_feedback =
-        guess
-        |> String.graphemes()
-        |> Enum.map(&{&1, :green})
+  defp process_guess_and_apply_updates(
+         %{
+           current_guess: secret_word,
+           secret_word: secret_word,
+           color_feedback: color_feedback,
+           attempts: attempts
+         } = game
+       ) do
+    current_color_feedback =
+      secret_word
+      |> String.graphemes()
+      |> Enum.map(&{&1, :green})
 
-      {current_color_feedback, %{won: true, current_guess: guess, attempts: attempts + 1}}
-    else
-      guess_letters = String.graphemes(guess)
-      secret_word_letters = String.graphemes(secret_word)
-      current_color_feedback = check_letters(guess_letters, secret_word_letters)
+    color_feedback = color_feedback ++ [current_color_feedback]
+    Map.merge(game, %{color_feedback: color_feedback, won: true, attempts: attempts + 1})
+  end
 
-      {current_color_feedback, %{current_guess: guess, attempts: attempts + 1}}
-    end
+  defp process_guess_and_apply_updates(
+         %{
+           current_guess: current_guess,
+           color_feedback: color_feedback,
+           attempts: attempts,
+           secret_word: secret_word
+         } = game
+       ) do
+    guess_letters = String.graphemes(current_guess)
+    secret_word_letters = String.graphemes(secret_word)
+    current_color_feedback = check_letters(guess_letters, secret_word_letters)
+    color_feedback = color_feedback ++ [current_color_feedback]
+
+    Map.merge(game, %{color_feedback: color_feedback, attempts: attempts + 1})
   end
 
   defp check_letters(guess_letters, secret_word_letters) do
