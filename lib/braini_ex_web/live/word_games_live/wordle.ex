@@ -36,13 +36,16 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
   end
 
   defp assign_title(socket, title), do: assign(socket, title: title)
+
   defp assign_game(socket) do
     case WordGames.start_wordle_game() do
       %Game{secret_word: @message} ->
         socket
         |> put_flash(:error, "Wordle currently not available")
         |> redirect(to: "/")
-      game -> assign(socket, game: game)
+
+      game ->
+        assign(socket, game: game)
     end
   end
 

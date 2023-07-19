@@ -19,6 +19,6 @@ defmodule BrainiEx.WordGames.Wordle.Game do
 
   @spec new(map()) :: t()
   def new(%{secret_word: _secret_word} = params) do
-    Map.merge(%__MODULE__{}, params)
+    struct!(%__MODULE__{}, params)
   end
 end

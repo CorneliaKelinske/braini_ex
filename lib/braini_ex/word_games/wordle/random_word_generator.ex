@@ -27,9 +27,14 @@ defmodule BrainiEx.WordGames.Wordle.RandomWordGenerator do
   @impl GenServer
   def init(_) do
     case words() do
-      {:ok, words} -> {:ok, %{all_words: words, unused_words: words}}
-      {:error, %ErrorMessage{message: @message}} -> {:ok, %{all_words: @message}}
-      error -> {:error, ErrorMessage.internal_server_error("Something went wrong", inspect(error))}
+      {:ok, words} ->
+        {:ok, %{all_words: words, unused_words: words}}
+
+      {:error, %ErrorMessage{message: @message}} ->
+        {:ok, %{all_words: @message}}
+
+      error ->
+        {:error, ErrorMessage.internal_server_error("Something went wrong", inspect(error))}
     end
   end
 
