@@ -56,7 +56,7 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
   @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
-    <h1><%= @title %></h1>
+    <h1 class="font-bold text-2xl text-gray-900 mb-8"><%= @title %></h1>
     <div>
       <%= for feedback <- @game.color_feedback do %>
         <p>
@@ -68,8 +68,13 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
     </div>
     <%= if @game.attempts < 6 and @game.won === false do %>
       <div>
-        <.simple_form :let={f} for={%{}} as={:game} phx-submit="check">
-          <.input field={{f, :current_guess}} label="Your guess" />
+        <.simple_form :let={f} for={%{}} as={:game} phx-submit="check" additional_classes="w-48">
+          <.input
+            field={{f, :current_guess}}
+            label="Your guess"
+            additional_classes="tracking-widest text-gray-900 text-4xl"
+
+          />
         </.simple_form>
       </div>
     <% else %>

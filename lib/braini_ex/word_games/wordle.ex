@@ -15,7 +15,7 @@ defmodule BrainiEx.WordGames.Wordle do
   @spec check_guess_and_update_game(String.t(), Game.t()) :: Game.t()
   def check_guess_and_update_game(
         guess,
-        %Game{secret_word: secret_word, attempts: attempts, color_feedback: color_feedback} = game
+        %Game{} = game
       ) do
     game = Map.put(game, :current_guess, String.downcase(guess))
 
