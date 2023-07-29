@@ -194,6 +194,7 @@ defmodule BrainiExWeb.CoreComponents do
   attr :rest, :global,
     include: ~w(autocomplete name rel action enctype method novalidate target),
     doc: "the arbitrary HTML attributes to apply to the form tag"
+
   attr :additional_classes, :string, default: nil
 
   slot :inner_block, required: true

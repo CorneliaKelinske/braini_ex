@@ -4,7 +4,7 @@ defmodule BrainiEx.WordGames.Wordle do
   """
   alias BrainiEx.WordGames.Wordle.{Game, RandomWordGenerator, Words}
 
-  @message "Unable to request wordle words"
+  @message "Unable to request words"
 
   @spec create_game() :: Game.t()
   def create_game do
