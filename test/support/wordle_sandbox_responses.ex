@@ -8,7 +8,7 @@ defmodule BrainiEx.Support.WordleSandboxResponses do
   def words_response, do: {:ok, @words}
 
   def words_error_response,
-    do: {:error, ErrorMessage.bad_request("Unable to request wordle words", "some error info")}
+    do: {:error, ErrorMessage.bad_request("Unable to request words", "some error info")}
 
   def mock_words_response do
     {words_url(), fn -> words_response() end}

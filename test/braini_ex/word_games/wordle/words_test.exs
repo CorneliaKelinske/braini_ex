@@ -18,7 +18,7 @@ defmodule BrainiEx.WordGames.Wordle.WordsTest do
       assert {:error,
               %ErrorMessage{
                 code: :bad_request,
-                message: "Unable to request wordle words",
+                message: "Unable to request words",
                 details: "some error info"
               }} = Words.get_words()
     end

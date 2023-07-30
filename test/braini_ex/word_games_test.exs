@@ -13,7 +13,7 @@ defmodule BrainiEx.WordGames.Test do
     color_feedback: []
   }
 
-  @message "Unable to request wordle words"
+  @message "Unable to request words"
 
   describe "&start_wordle_game/0" do
     test "returns a Game struct with a 5 letter secret word" do

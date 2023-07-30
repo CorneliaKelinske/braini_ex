@@ -19,7 +19,7 @@ defmodule BrainiExWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    live "/word_games/wordle", WordGamesLive.Wordle
+    live "/word_games/five_letters", WordGamesLive.Wordle
   end
 
   # Other scopes may use custom stacks.

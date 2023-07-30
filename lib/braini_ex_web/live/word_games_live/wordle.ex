@@ -6,8 +6,8 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
   alias BrainiEx.WordGames
   alias BrainiEx.WordGames.Wordle.Game
 
-  @title "Wordle"
-  @message "Unable to request wordle words"
+  @title "Five Letters"
+  @message "Unable to request words"
 
   @impl Phoenix.LiveView
   def mount(_, _, socket) do
@@ -32,7 +32,7 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
 
   @impl Phoenix.LiveView
   def handle_event("restart", _, socket) do
-    {:noreply, redirect(socket, to: ~p"/word_games/wordle")}
+    {:noreply, redirect(socket, to: ~p"/word_games/five_letters")}
   end
 
   defp assign_title(socket, title), do: assign(socket, title: title)
@@ -41,7 +41,7 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
     case WordGames.start_wordle_game() do
       %Game{secret_word: @message} ->
         socket
-        |> put_flash(:error, "Wordle currently not available")
+        |> put_flash(:error, "Five Letters is currently not available")
         |> redirect(to: "/")
 
       game ->
@@ -73,7 +73,6 @@ defmodule BrainiExWeb.WordGamesLive.Wordle do
             field={{f, :current_guess}}
             label="Your guess"
             additional_classes="tracking-widest text-gray-900 text-4xl"
-
           />
         </.simple_form>
       </div>
